@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    @font-face {
+      font-family: 'Aurora Pro';
+      src: url('./fonts/AuroraPro.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      border: none;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-image: url('./assets/aboutbg.png');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      color: #d1cfc0;
+    }
+
+    header {
+      margin-top: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 9%;
+      background-color: transparent;
+      filter: drop-shadow(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 4.5rem;
+      color: #d1cfc0;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.5s ease;
+      font-family: 'Aurora Pro', 'Poppins', sans-serif;
+    }
+
+    .logo:hover {
+      transform: scale(1.2);
+    }
+
+    section.about {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5rem 9%;
+      gap: 5rem;
+    }
+
+    .about-content {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .about-content h1 {
+      font-size: 5rem;
+      font-weight: 700;
+      color: #f76f53;
+      margin-bottom: 2rem;
+    }
+
+    .about-content p {
+      font-size: 1.8rem;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.8rem;
+      background-color: transparent;
+      border-radius: 4rem;
+      font-size: 1.6rem;
+      color: #d1cfc0;
+      letter-spacing: 0.3rem;
+      font-weight: 600;
+      border: 2px solid #d1cfc0;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: scale3d(1.03);
+      background-color: #d1cfc0;
+      color: #1f1f1f;
+      box-shadow: 0 0 25px #d1cfc0;
+    }
+
+    .image-slider {
+      flex: 1;
+      max-width: 5000px;
+      position: relative;
+      padding: 2rem;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide-image {
+      width: 361px;
+      height: 397px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .slide-image:hover {
+      transform: scale(1.05);
+    }
+
+    .slide-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide-content, .slide-title, .slide-description {
+      display: none;
+    }
+
+    .slider-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .prev, .next {
+      display: inline-block;
+      padding: 1rem 2.8rem;
+      background-color: transparent;
+      border-radius: 4rem;
+      font-size: 1.6rem;
+      color: #d1cfc0;
+      letter-spacing: 0.3rem;
+      font-weight: 600;
+      border: 2px solid #d1cfc0;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+    .prev:hover, .next:hover {
+      transform: scale3d(1.03);
+      background-color: #d1cfc0;
+      color: #1f1f1f;
+      box-shadow: 0 0 25px #d1cfc0
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: #d1cfc0;
+      transform: scale(1.2);
+    }
+
+    .slide-counter {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: #d1cfc0;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 1200px) {
+      section.about {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+      }
+
+      .about-content {
+        max-width: 100%;
+      }
+
+      .image-slider {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      section.about {
+        padding: 3rem;
+      }
+
+      .about-content h1 {
+        font-size: 4rem;
+      }
+
+      .about-content p {
+        font-size: 1.6rem;
+      }
+
+      .btn {
+        font-size: 1.4rem;
+        padding: 0.8rem 2.5rem;
+      }
+
+      .slide-image {
+        width: 140px;
+        height: 140px;
+      }
+
+      .slider-container {
+        height: 200px;
+      }
+
+      .slide {
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">ABOUT ME.</a>
+  </header>
+
+  <section class="about">
+    <div class="about-content">
+      <h1>Miguel De Guzman</h1>
+      <p>Hi! I'm Miguel Ivan G. De Guzman, the youngest among three siblings. I'm currently 22 years old, born on March 17, 2003, and I live in Sampaloc, Manila. I'm presently pursuing my degree in Bachelor of Science in Computer Engineering (BSCpE) at the University of the East, where I continue to explore my growing passion for technology and innovation.</p>
+      <p>From a young age, I've always been curious about how things work especially when it comes to computers and electronic systems. That curiosity eventually led me to fall in love with programming, networking, and problem-solving. I'm especially fascinated by Cisco networking technologies and dream of building a career where I can contribute to the future of tech infrastructure and systems development.</p>
+      <p>Outside of academics and technology, I also find joy in art and music. I love to play the guitar, sing, and express myself through creative outlets. Music has always been a way for me to unwind and reflect, especially when life gets overwhelming.</p>
+      <a href="index.html" class="btn">← Go Back</a>
+    </div>
+
+    <div class="image-slider">
+      <div class="slider-container">
+        <div class="slide-counter">
+          <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
+        </div>
+        <div class="slide active">
+        <div class="slide-image"><img src="./assets/1.png" alt="Custom Image 1" /></div>
+        <div class="slide-image"><img src="./assets/2.png" alt="Custom Image 2" /></div>
+        <div class="slide-image"><img src="./assets/3.png" alt="Custom Image 3" /></div>
+        </div>
+        <div class="slide">
+        <div class="slide-image"><img src="./assets/4.png" alt="Custom Image 1" /></div>
+        <div class="slide-image"><img src="./assets/5.png" alt="Custom Image 2" /></div>
+        <div class="slide-image"><img src="./assets/6.png" alt="Custom Image 3" /></div>
+        </div>
+
+        <div class="slide">
+        <div class="slide-image"><img src="./assets/7.png" alt="Custom Image 1" /></div>
+        <div class="slide-image"><img src="./assets/8.png" alt="Custom Image 2" /></div>
+        <div class="slide-image"><img src="./assets/9.png" alt="Custom Image 3" /></div>
+        </div>
+
+        <div class="slide">
+        <div class="slide-image"><img src="./assets/10.png" alt="Custom Image 1" /></div>
+        <div class="slide-image"><img src="./assets/11.png" alt="Custom Image 2" /></div>
+        <div class="slide-image"><img src="./assets/12.png" alt="Custom Image 3" /></div>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <button class="prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="dots-container">
+          <span class="dot active" onclick="currentSlideIndex(1)"></span>
+          <span class="dot" onclick="currentSlideIndex(2)"></span>
+          <span class="dot" onclick="currentSlideIndex(3)"></span>
+          <span class="dot" onclick="currentSlideIndex(4)"></span>
+        </div>
+        <button class="next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let slideIndex = 1;
+    const totalSlides = 4;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+
+      if (n > totalSlides) slideIndex = 1;
+      if (n < 1) slideIndex = totalSlides;
+
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slides[slideIndex - 1].classList.add('active');
+      dots[slideIndex - 1].classList.add('active');
+
+      document.getElementById('currentSlide').textContent = slideIndex;
+      document.getElementById('totalSlides').textContent = totalSlides;
+    }
+
+    function changeSlide(n) {
+      slideIndex += n;
+      showSlide(slideIndex);
+    }
+
+    function currentSlideIndex(n) {
+      slideIndex = n;
+      showSlide(slideIndex);
+    }
+
+    showSlide(slideIndex);
+  </script>
+</body>
+</html>
